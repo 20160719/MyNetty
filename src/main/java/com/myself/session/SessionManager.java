@@ -3,12 +3,24 @@ package com.myself.session;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import io.netty.channel.Channel;
-
 public final class SessionManager {
 	
-	private static Map<String, String> userToAddressRela = new ConcurrentHashMap<String, String>();
+	private static Map<String, Session> sessionMap = new ConcurrentHashMap<String, Session>();
 	
-	private static Map<String, Channel> addressToChannelRela = new ConcurrentHashMap<String, Channel>();
+	public static Session put(String key, Session session) {
+		Session curSession = sessionMap.get(key);
+		if(null != curSession) {
+			return null;
+		}
+		return sessionMap.put(key, session);
+	}
+	
+	public static Session get(String key) {
+		return sessionMap.get(key);
+	}
 
+	public static Session remove(String key) {
+		return sessionMap.remove(key);
+	}
+	
 }
